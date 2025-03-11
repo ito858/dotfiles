@@ -40,6 +40,60 @@
 "    -> My Preferences
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
+Plugin 'scrooloose/nerdtree'
+Plugin 'rking/ag.vim'
+Plugin 'ervandew/supertab'
+Plugin 'dracula/vim'
+Plugin 'easymotion/vim-easymotion'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'tpope/vim-surround'
+Plugin 'freeo/vim-kalisi'
+Plugin 'terryma/vim-multiple-cursors'
+Plugin 'junegunn/vim-easy-align'
+Plugin 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plugin 'junegunn/fzf.vim'
+
+" Plugin 'tpope/vim-fugitive'
+Plugin 'junegunn/seoul256.vim'
+Plugin 'adelarsq/vim-grimmjow'
+Plugin 'sonph/onehalf', {'rtp': 'vim/'}
+Plugin 'yegappan/taglist'
+Plugin 'arzg/vim-colors-xcode'
+Plugin 'arcticicestudio/nord-vim'
+Plugin 'sainnhe/sonokai'
+Plugin 'wadackel/vim-dogrun'
+Plugin 'keith/parsec.vim'
+Plugin 'machakann/vim-highlightedyank'
+
+" Python Sagemath
+Plugin 'vim-python/python-syntax'
+Plugin 'jeetsukumaran/vim-pythonsense'
+Plugin 'Vimjas/vim-python-pep8-indent'
+
+Plugin 'rhysd/clever-f.vim'
+Plugin 'rhysd/vim-healthcheck'
+
+"(Neo)vim plugin for Typst.
+Plugin 'kaarmu/typst.vim'
+" All of your Plugins must be added before the following line
+" 让 Vim 输入中文成为一种享受
+Plugin 'ybian/smartim'
+
+call vundle#end()            " required
+filetype plugin indent on    " required
+
+source ~/Dropbox/dotfiles/.vimrc_mvim
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
