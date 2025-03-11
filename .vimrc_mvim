@@ -1,0 +1,797 @@
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Maintainer:
+"       Amir Salihefendic
+"       http://amix.dk - amix@amix.dk
+"
+" Version:
+"       5.0 - 29/05/12 15:43:36
+"
+" Blog_post:
+"       http://amix.dk/blog/post/19691#The-ultimate-Vim-configuration-on-Github
+"
+" Awesome_version:
+"       Get this config, nice color schemes and lots of plugins!
+"
+"       Install the awesome version from:
+"
+"           https://github.com/amix/vimrc
+"
+" Syntax_highlighted:
+"       http://amix.dk/vim/vimrc.html
+"
+" Raw_version:
+"       http://amix.dk/vim/vimrc.txt
+"
+" Sections:
+"    -> General
+"    -> VIM user interface
+"    -> Colors and Fonts
+"    -> Files and backups
+"    -> Text, tab and indent related
+"    -> Visual mode related
+"    -> Moving around, tabs and buffers
+"    -> Status line
+"    -> Editing mappings
+"    -> vimgrep searching and cope displaying
+"    -> Spell checking
+"    -> Misc
+"    -> Helper functions
+"    -> LateX Suit
+"    -> My Preferences
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => General
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+
+" Sets how many lines of history VIM has to remember
+set history=700
+
+" Enable filetype plugins
+filetype plugin on
+filetype indent on
+
+" Set to auto read when a file is changed from the outside
+set autoread
+
+" With a map leader it's possible to do extra key combinations
+" like <leader>w saves the current file
+let mapleader = ","
+let g:mapleader = ","
+
+" Fast saving
+nmap <leader>s :w!<cr>
+
+"""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => VIM user interface
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Set 7 lines to the cursor - when moving vertically using j/k
+set so=7
+
+" Turn on the WiLd menu
+set wildmenu
+
+" Ignore compiled files
+set wildignore=*.o,*~,*.pyc,*.pdf
+
+"Always show current position
+set ruler
+
+" Height of the command bar
+set cmdheight=2
+
+" A buffer becomes hidden when it is abandoned
+set hid
+
+" Configure backspace so it acts as it should act
+set backspace=eol,start,indent
+set whichwrap+=<,>,h,l
+
+" Ignore case when searching
+set ignorecase
+
+" When searching try to be smart about cases
+set smartcase
+
+" Highlight search results
+set hlsearch
+
+" Makes search act like search in modern browsers
+set incsearch
+
+" Don't redraw while executing macros (good performance config)
+set lazyredraw
+
+" For regular expressions turn magic on
+set magic
+
+" Show matching brackets when text indicator is over them
+set showmatch
+" How many tenths of a second to blink when matching brackets
+set mat=2
+
+" No annoying sound on errors
+set noerrorbells
+set novisualbell
+set t_vb=
+set tm=500
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Colors and Fonts
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Enable syntax highlighting
+syntax enable
+"Choose one of the following themes:
+" colorscheme  greygull
+
+" It was DimGrey atom lucius fu seoul256 onehalfdark gruvbox
+colorscheme atom
+set termguicolors
+" Enable italics, Make sure this is immediately after colorscheme
+" https://stackoverflow.com/questions/3494435/vimrc-make-comments-italic
+highlight Comment cterm=italic gui=italic
+set background=dark
+
+
+if $TERM_PRPGRAM == "xterm-new"
+   set mouse=a
+   colorscheme parsec
+endif
+
+
+
+
+if $TERM == "screen-256color"
+   set mouse=a
+   colorscheme atom
+   let g:togglecursor_force = 'xterm'
+"    let &t_8f = "\<Esc>[38:2:%lu:%lu:%lum"
+"    let &t_8b = "\<Esc>[48:2:%lu:%lu:%lum"
+endif
+
+if $TERM == "xterm-256color"
+   set mouse=a
+   colorscheme parsec
+   let g:togglecursor_force = 'xterm'
+endif
+
+
+" Set extra options when running in GUI mode
+if has("gui_running")
+    set guioptions-=T
+    set guioptions+=e
+    set t_Co=256
+    set guitablabel=%M\ %t
+"    set guifont= DejaVu\ Sans\ Mono
+    set guifont=Menlo:h12
+colorscheme parsec
+"     set guifont=Fira\ Mono\ Medium:h11
+endif
+
+let g:rehash256 = 1
+
+" Set utf8 as standard encoding and en_US as the standard language
+set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
+set termencoding=utf-8
+set encoding=utf8
+
+" Use Unix as the standard file type
+set ffs=unix,dos,mac
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Files, backups and undo
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Turn backup off, since most stuff is in SVN, git et.c anyway...
+set nobackup
+set nowb
+set noswapfile
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Text, tab and indent related
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Use spaces instead of tabs
+set expandtab
+
+" Be smart when using tabs ;)
+set smarttab
+
+" 1 tab == 4 spaces
+set shiftwidth=4
+set tabstop=4
+
+" Linebreak on 500 characters
+set lbr
+set tw=500
+
+set ai "Auto indent
+set si "Smart indent
+set wrap "Wrap lines
+set textwidth=79
+set formatoptions=qrn1
+set colorcolumn=85
+
+""""""""""""""""""""""""""""""
+" => Visual mode related
+""""""""""""""""""""""""""""""
+" Visual mode pressing * or # searches for the current selection
+" Super useful! From an idea by Michael Naumann
+vnoremap <silent> * :call VisualSelection('f')<CR>
+vnoremap <silent> # :call VisualSelection('b')<CR>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Moving around, tabs, windows and buffers
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"Use double ;, save one stroke!
+nnoremap ; :
+
+" Treat long lines as break lines (useful when moving around in them)
+map j gj
+map k gk
+
+" Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
+map <space> /
+map <c-space> ?
+
+" Disable highlight when <leader><cr> is pressed
+map <silent> <leader><cr> :noh<cr>
+
+" Smart way to move between windows
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
+
+" Close the current buffer
+map <leader>bd :Bclose<cr>
+
+" Close all the buffers
+map <leader>ba :1,1000 bd!<cr>
+
+" Useful mappings for managing tabs
+map <leader>tn :tabnew<cr>
+map <leader>to :tabonly<cr>
+map <leader>tc :tabclose<cr>
+
+" Opens a new tab with the current buffer's path
+" Super useful when editing files in the same directory
+map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
+
+" Maps Alt-[h,j,k,l] to resizing a window split
+map <silent> <A-h> <C-w><
+map <silent> <A-j> <C-W>-
+map <silent> <A-k> <C-W>+
+map <silent> <A-l> <C-w>>
+
+" Switch CWD to the directory of the open buffer
+map <leader>cd :cd %:p:h<cr>:pwd<cr>
+
+" Specify the behavior when switching between buffers
+try
+  set switchbuf=useopen,usetab,newtab
+  set stal=2
+catch
+endtry
+
+" Return to last edit position when opening files (You want this!)
+autocmd BufReadPost *
+     \ if line("'\"") > 0 && line("'\"") <= line("$") |
+     \   exe "normal! g`\"" |
+     \ endif
+" Remember info about open buffers on close
+set viminfo^=%
+"v: Set the number of files to save with oldfiles
+" must be written in vimrc
+set  viminfo +='10000
+" oDo not delete the default setting t Not reflected
+" set  viminfo- = '1000
+""""""""""""""""""""""""""""""
+" => Status line
+""""""""""""""""""""""""""""""
+"hybrid line number mode
+set relativenumber
+set number
+" Always show the status line
+set laststatus=2
+
+" Format the status line
+set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Editing mappings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Remap VIM 0 to first non-blank character
+map 0 ^
+
+
+" Move a line of text using ALT+[jk] or Comamnd+[jk] on mac
+nmap <M-j> mz:m+<cr>`z
+nmap <M-k> mz:m-2<cr>`z
+vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
+vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
+
+if has("mac") || has("macunix")
+  nmap <D-j> <M-j>
+  nmap <D-k> <M-k>
+  vmap <D-j> <M-j>
+  vmap <D-k> <M-k>
+endif
+
+" Delete trailing white space on save, useful for Python and CoffeeScript ;)
+func! DeleteTrailingWS()
+  exe "normal mz"
+  %s/\s\+$//ge
+  exe "normal `z"
+endfunc
+autocmd BufWrite *.py :call DeleteTrailingWS()
+autocmd BufWrite *.coffee :call DeleteTrailingWS()
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => vimgrep searching and cope displaying
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+" Open vimgrep and put the cursor in the right position
+" map <leader>g :vimgrep // **/*.<left><left><left><left><left><left><left>
+map <leader>g :vimgrep // *.<left><left><left><left>
+
+" Vimgreps in the current dir among tex files
+" map <leader><space> :vimgrep // <C-R>%<C-A><right><right><right><right><right><right><right><right><right>
+" map <leader><space> :grep %:h/*.tex<left><left><left><left><left><left><left><left><left>
+
+
+
+" Do :help cope if you are unsure what cope is. It's super useful!
+"
+" When you search with vimgrep, display your results in cope by doing:
+"   <leader>cc
+"
+" To go to the next search result do:
+"   <leader>n
+"
+" To go to the previous search results do:
+"   <leader>p
+"
+map <leader>cc :botright cope<cr>
+map <leader>co ggVGy:tabnew<cr>:set syntax=qf<cr>pgg
+map <leader>n :cn<cr>
+" map <leader>p :cp<cr>
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Spell checking
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""Make sure Vim recognize enough lines!
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+syn sync maxlines=2000
+syn sync minlines=500
+" Pressing ,ss will toggle and untoggle spell checking
+map <leader>ss :setlocal spell!<cr>
+"use the system spell checker (in whatever language it's currently supported to run).
+set spelllang=en,cjk
+"make sure spell checking everywhere
+syntax spell toplevel
+"
+"Correct spells of the line
+inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
+
+" Shortcuts using <leader>
+map <leader>sn ]s
+map <leader>sp [s
+map <leader>sa zg
+map <leader>s? z=
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Misc
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Remove the Windows ^M - when the encodings gets messed up
+noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
+
+" Quickly open a buffer for scripbble
+map <leader>q :e ~/buffer<cr>
+
+" Toggle paste mode on and off
+map <leader>pp :setlocal paste!<cr>
+
+" New email from clipboard
+" map <leader>en :!automator ~/Documents/WorkFlows/clipboard2mail.workflow<cr>
+
+" Ese to quit terminal mode
+tnoremap <ESC> <C-w>:q!<CR>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""
+" Add this snippet to your vimrc to tell Vim to automatically open the
+" location/quickfix window after :make, :grep, :lvimgrep and friends if there
+" are valid locations/errors:
+"""""""""""""""""""""""""""""""""""""""""""""""""""
+augroup myvimrc
+    autocmd!
+    autocmd QuickFixCmdPost [^l]* cwindow
+    autocmd QuickFixCmdPost l*    lwindow
+augroup END
+""""""""""""""""""""""""""""""""""""""""""""""""""
+"Auto-Reload Your Vimrc
+"""""""""""""""""""""""""""""""""""""""""""""""""""
+augroup reload_vimrc " {
+    autocmd!
+    autocmd BufWritePost $MYVIMRC source $MYVIMRC
+augroup END " }
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Helper functions
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! CmdLine(str)
+    exe "menu Foo.Bar :" . a:str
+    emenu Foo.Bar
+    unmenu Foo
+endfunction
+
+function! VisualSelection(direction) range
+    let l:saved_reg = @"
+    execute "normal! vgvy"
+
+    let l:pattern = escape(@", '\\/.*$^~[]')
+    let l:pattern = substitute(l:pattern, "\n$", "", "")
+
+    if a:direction == 'b'
+        execute "normal ?" . l:pattern . "^M"
+    elseif a:direction == 'gv'
+        call CmdLine("vimgrep " . '/'. l:pattern . '/' . ' **/*.')
+    elseif a:direction == 'replace'
+        call CmdLine("%s" . '/'. l:pattern . '/')
+    elseif a:direction == 'f'
+        execute "normal /" . l:pattern . "^M"
+    endif
+
+    let @/ = l:pattern
+    let @" = l:saved_reg
+endfunction
+
+
+" Returns true if paste mode is enabled
+function! HasPaste()
+    if &paste
+        return 'PASTE MODE'
+    en
+    return ''
+endfunction
+
+" Don't close window, when deleting a buffer
+command! Bclose call <SID>BufcloseCloseIt()
+function! <SID>BufcloseCloseIt()
+   let l:currentBufNum = bufnr("%")
+   let l:alternateBufNum = bufnr("#")
+
+   if buflisted(l:alternateBufNum)
+     buffer #
+   else
+     bnext
+   endif
+
+   if bufnr("%") == l:currentBufNum
+     new
+   endif
+
+   if buflisted(l:currentBufNum)
+     execute("bdelete! ".l:currentBufNum)
+   endif
+endfunction
+"""""""""""""""""""""""""""""
+" Commenting blocks of code.
+"""""""""""""""""""""""""""""
+" autocmd FileType typst call SetTypstCommentLeader()
+" 
+" function! SetTypstCommentLeader()
+"   let b:comment_leader = '// '
+"   if !exists("b:comment_leader")
+"     echoerr "Failed to set b:comment_leader for Typst files"
+"   endif
+" endfunction
+
+
+autocmd FileType c,cpp,java,scala let b:comment_leader = '// '
+autocmd FileType typst            let b:comment_leader = '// '
+autocmd FileType sh,ruby,python   let b:comment_leader = '# '
+autocmd FileType conf,fstab,yml   let b:comment_leader = '# '
+autocmd FileType snippets,yaml    let b:comment_leader = '# '
+autocmd FileType tex              let b:comment_leader = '% '
+autocmd FileType mail             let b:comment_leader = '> '
+autocmd FileType vim              let b:comment_leader = '" '
+autocmd FileType lua              let b:comment_leader = '-- '
+noremap <silent> ,cc :<C-B>silent <C-E>s/^/<C-R>=escape(b:comment_leader,'\/')<CR>/<CR>:nohlsearch<CR>
+noremap <silent> ,cu :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<CR>//e<CR>:nohlsearch<CR>
+
+
+
+""""""""""""""""""""""""""""""""""""""""
+"""Change current working director
+"""""""""""""""""""""""""""""""""""""""
+nnoremap ,cd :cd %:p:h<CR>
+
+"""""""""""""""""""""""""""""""""""""""
+" execute line under the cursor
+"""""""""""""""""""""""""""""""""""""""
+nnoremap <leader>r yy:@"<CR>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => NerdTree
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nnoremap <F6> :NERDTreeToggle<CR>
+nnoremap <F5> :NERDTreeFind<CR>
+
+let g:NERDTreeWinPos = "right"
+
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => vim-tex
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"See help
+let g:tex_flavor = 'latex'
+" set <localleader>
+let maplocalleader=","
+let g:vimtex_view_method='skim'
+let g:vimtex_view_skim_activate=1
+let g:vimtex_view_skim_reading_bar=1
+" let g:vimtex_view_method= 'zathura'
+" Disable overfull/underfull \hbox and all package warnings
+"the option has been removed
+" let g:vimtex_quickfix_latexlog = {
+"           \ 'overfull' : 0,
+"           \ 'underfull' : 0,
+"           \ 'packages' : {
+"           \   'default' : 0,
+"           \ },
+"           \}
+
+" Disable custom warnings based on regexp
+let g:vimtex_quickfix_ignore_filters = [
+          \ 'Marginpar on page',
+          \ 'Token not allowed',
+          \]
+" To enable automatic completion with |youcompleteme|, use the following options:
+" >
+if !exists('g:ycm_semantic_triggers')
+let g:ycm_semantic_triggers = {}
+endif
+let g:ycm_semantic_triggers.tex = g:vimtex#re#youcompleteme
+"Speed up loading by avoiding fold-expr
+let g:vimtex_fold_manual=1
+
+"Setting up table of contents
+" let g:vimtex_toc_config = {
+"       \ 'name' : 'toc',
+"       \ 'split_width' : 50,
+"       \ 'todo_sorted' : 0,
+"       \ 'show_help' : 1,
+"       \ 'show_numbers' : 1,
+"       \ 'mode' : 2,
+"       \}
+"------------FZF integration---------------
+nnoremap <localleader>t :call vimtex#fzf#run()<cr>
+
+
+"Personal Preferences
+" Auto complete the brackets () and {}
+inoremap ( ()<Esc>i
+inoremap } {}<Esc>i
+
+
+""""""""""""""""""""""""""""""""""""
+"==> vim-easy-align
+"""""""""""""""""""""""""""""""""""
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+""""""""""""""""""""""""""""""""""""
+"==>CtrlP settings
+"""""""""""""""""""""""""""""""""""
+
+" Setup some default ignores
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
+" set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
+
+" let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+  \ 'file': '\v\.(exe|so|dll|dat|DS_Store)$',
+  \ 'link': 'some_bad_symbolic_links',
+  \ }
+" Use the nearest .git directory as the cwd
+" This makes a lot of sense if you are working on a project that is in version
+" control. It also supports works with .svn, .hg, .bzr.
+
+if executable('rg')
+  " Use ag over grep
+  set grepprg=rg\ --vimgrep\ --no-heading\ --smart-case
+endif
+
+let g:ctrlp_use_caching = 1
+let g:ctrlp_clear_cache_on_exit = 1
+
+if executable('rg')
+  let g:ctrlp_user_command = 'rg %s --files --hidden --color=never --glob ""'
+endif
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_cmd = 'CtrlPMRU'
+" Easy bindings for its various modes
+" nmap <leader>bb :CtrlPBuffer<cr>
+" nmap <leader>bm :CtrlPMixed<cr>
+" nmap <leader>bs :CtrlPMRU<cr>
+" Extensions are optional. To enable an extension, add its name to the variable
+" g:ctrlp_extensions: >
+let g:ctrlp_extensions = ['line', 'changes', 'quickfix', 'rtscript',  'bookmarkdir']
+" Specify the number of recently opened files you want CtrlP to remember: >
+let g:ctrlp_mruf_max = 2500
+
+" add all recently used work dirs to the CtrlPBookmarkDir list by an autocommand
+augroup CtrlPDirMRU
+autocmd!
+autocmd FileType * if &modifiable | execute 'silent CtrlPBookmarkDirAdd! %:p:h' | endif
+augroup END
+""""""""""""""""""""""""""""""""""""
+"==> Ag The Silver Searcher
+"""""""""""""""""""""""""""""""""""
+
+""""""""""""""""""""""""""""""""""""
+"==> ddc completion
+"""""""""""""""""""""""""""""""""""
+
+""""""""""""""""""""""""""""""""""""
+"==> UltiSnips and YouCompleteMe and Supertab.
+"""""""""""""""""""""""""""""""""""
+" Trigger configuration. Do not use <tab> if you use
+" https://github.com/Valloric/YouCompleteMe.
+" make YCM compatible with UltiSnips (using supertab)
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+let g:ycm_filetype_blacklist = {
+        \ 'tagbar': 1,
+        \ 'notes': 1,
+        \ 'netrw': 1,
+        \ 'unite': 1,
+        \ 'text': 1,
+        \ 'vimwiki': 1,
+        \ 'pandoc': 1,
+        \ 'infolog': 1,
+        \ 'leaderf': 1,
+        \ 'mail': 1
+        \}
+let g:SuperTabDefaultCompletionType = '<C-n>'
+let g:UltiSnipsEditSplit = 'vertical'
+" better key bindings for UltiSnipsExpandTrigger
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+let g:UltiSnipsListSnippets="<c-a>"
+
+let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/UltiSnips']
+
+
+" One more example on how to use this function to extract all snippets available
+" in the current buffer: >
+" function! GetAllSnippets()
+"   call UltiSnips#SnippetsInCurrentScope(1)
+"   let list = []
+"   for [key, info] in items(g:current_ulti_dict_info)
+"     let parts = split(info.location, ':')
+"     call add(list, {
+"       \"key": key,
+"       \"path": parts[0],
+"       \"linenr": parts[1],
+"       \"description": info.description,
+"       \})
+"   endfor
+"   return list
+" endfunction
+"
+"
+
+
+""""""""""""""""""""""""""""""""""""
+"==> Fzf vim setting
+"""""""""""""""""""""""""""""""""""
+" This is the default option:
+"   - Preview window on the right with 50% width
+"   - CTRL-/ will toggle preview window.
+" - Note that this array is passed as arguments to fzf#vim#with_preview function.
+" - To learn more about preview window options, see `--preview-window` section of `man fzf`.
+let g:fzf_preview_window = ['right:50%', 'ctrl-/']
+
+" [Buffers] Jump to the existing window if possible
+let g:fzf_buffers_jump = 1
+
+" [[B]Commits] Customize the options used by 'git log':
+let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
+
+" [Tags] Command to generate tags file
+let g:fzf_tags_command = 'ctags -R'
+
+" [Commands] --expect expression for directly executing the command
+let g:fzf_commands_expect = 'alt-enter,ctrl-x'
+
+" Enable per-command history
+" - History files will be stored in the specified directory
+" - When set, CTRL-N and CTRL-P will be bound to 'next-history' and
+"   'previous-history' instead of 'down' and 'up'.
+let g:fzf_history_dir = '~/.local/share/fzf-history'
+
+" Replace the default dictionary completion with fzf-based fuzzy completion
+inoremap <expr> <c-x><c-k> fzf#vim#complete('cat /usr/share/dict/words')
+" Insert mode completion
+" imap <c-x><c-k> <plug>(fzf-complete-word)
+imap <c-x><c-f> <plug>(fzf-complete-path)
+imap <c-x><c-l> <plug>(fzf-complete-line)
+
+
+" command! -bang -nargs=* Ag
+"   \ call fzf#vim#grep(
+"   \   'ag --column --numbers --noheading --color --smart-case -- '.shellescape(<q-args>), 1,
+"   \   fzf#vim#with_preview(), <bang>0)
+
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always --smart-case -- '.shellescape(<q-args>), 1,
+  \   fzf#vim#with_preview(), <bang>0)
+
+
+nnoremap <silent> <C-f> :Files<CR>
+nnoremap <silent> <Leader>f :Rg<CR>
+nnoremap <silent> <Leader>/ :BLines<CR>
+
+
+
+" fzf-bibtex
+""""""""""""""""""""""""""""""""""""
+" https://github.com/msprev/fzf-bibtex
+"""""""""""""""""""""""""""""""""""
+let $FZF_BIBTEX_CACHEDIR = 'Library/Caches'
+let $FZF_BIBTEX_SOURCES ='~/Dropbox/Bibtex_database/mylib.bib'
+function! s:bibtex_cite_sink(lines)
+    let r=system("bibtex-cite ", a:lines)
+    execute ':normal! a' . r
+endfunction
+
+function! s:bibtex_markdown_sink(lines)
+    let r=system("bibtex-markdown ", a:lines)
+    execute ':normal! a' . r
+endfunction
+
+nnoremap <silent> <leader>c :call fzf#run({
+                        \ 'source': 'bibtex-ls',
+                        \ 'sink*': function('<sid>bibtex_cite_sink'),
+                        \ 'up': '40%',
+                        \ 'options': '--ansi --layout=reverse-list --multi --prompt "Cite> "'})<CR>
+
+nnoremap <silent> <leader>m :call fzf#run({
+                        \ 'source': 'bibtex-ls',
+                        \ 'sink*': function('<sid>bibtex_markdown_sink'),
+                        \ 'up': '40%',
+                        \ 'options': '--ansi --layout=reverse-list --multi --prompt "Markdown> "'})<CR>
+
+""""""""""""""""""""""""""""""""""""
+"==> Markoown Preview
+"""""""""""""""""""""""""""""""""""
+" Ctrl-m to run preview
+let vim_markdown_preview_hotkey='<C-m>'
+
+" example: Use Pandoc to render HTML.
+let vim_markdown_preview_pandoc=1
+
+
+""""""""""""""""""""""""""""""""""""
+"==> 让 Vim 输入中文成为一种享受
+"""""""""""""""""""""""""""""""""""
+
+
