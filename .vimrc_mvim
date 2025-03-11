@@ -488,7 +488,7 @@ endfunction
 " Commenting blocks of code.
 """""""""""""""""""""""""""""
 " autocmd FileType typst call SetTypstCommentLeader()
-" 
+"
 " function! SetTypstCommentLeader()
 "   let b:comment_leader = '// '
 "   if !exists("b:comment_leader")
@@ -531,60 +531,6 @@ let g:NERDTreeWinPos = "right"
 
 
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => vim-tex
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"See help
-let g:tex_flavor = 'latex'
-" set <localleader>
-let maplocalleader=","
-let g:vimtex_view_method='skim'
-let g:vimtex_view_skim_activate=1
-let g:vimtex_view_skim_reading_bar=1
-" let g:vimtex_view_method= 'zathura'
-" Disable overfull/underfull \hbox and all package warnings
-"the option has been removed
-" let g:vimtex_quickfix_latexlog = {
-"           \ 'overfull' : 0,
-"           \ 'underfull' : 0,
-"           \ 'packages' : {
-"           \   'default' : 0,
-"           \ },
-"           \}
-
-" Disable custom warnings based on regexp
-let g:vimtex_quickfix_ignore_filters = [
-          \ 'Marginpar on page',
-          \ 'Token not allowed',
-          \]
-" To enable automatic completion with |youcompleteme|, use the following options:
-" >
-if !exists('g:ycm_semantic_triggers')
-let g:ycm_semantic_triggers = {}
-endif
-let g:ycm_semantic_triggers.tex = g:vimtex#re#youcompleteme
-"Speed up loading by avoiding fold-expr
-let g:vimtex_fold_manual=1
-
-"Setting up table of contents
-" let g:vimtex_toc_config = {
-"       \ 'name' : 'toc',
-"       \ 'split_width' : 50,
-"       \ 'todo_sorted' : 0,
-"       \ 'show_help' : 1,
-"       \ 'show_numbers' : 1,
-"       \ 'mode' : 2,
-"       \}
-"------------FZF integration---------------
-nnoremap <localleader>t :call vimtex#fzf#run()<cr>
-
-
-"Personal Preferences
-" Auto complete the brackets () and {}
-inoremap ( ()<Esc>i
-inoremap } {}<Esc>i
-
-
 """"""""""""""""""""""""""""""""""""
 "==> vim-easy-align
 """""""""""""""""""""""""""""""""""
@@ -598,48 +544,48 @@ nmap ga <Plug>(EasyAlign)
 """""""""""""""""""""""""""""""""""
 
 " Setup some default ignores
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
+" set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
 " set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
 
 " let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
-  \ 'file': '\v\.(exe|so|dll|dat|DS_Store)$',
-  \ 'link': 'some_bad_symbolic_links',
-  \ }
+" let g:ctrlp_custom_ignore = {
+"   \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+"   \ 'file': '\v\.(exe|so|dll|dat|DS_Store)$',
+"   \ 'link': 'some_bad_symbolic_links',
+"   \ }
 " Use the nearest .git directory as the cwd
 " This makes a lot of sense if you are working on a project that is in version
 " control. It also supports works with .svn, .hg, .bzr.
 
-if executable('rg')
-  " Use ag over grep
-  set grepprg=rg\ --vimgrep\ --no-heading\ --smart-case
-endif
-
-let g:ctrlp_use_caching = 1
-let g:ctrlp_clear_cache_on_exit = 1
-
-if executable('rg')
-  let g:ctrlp_user_command = 'rg %s --files --hidden --color=never --glob ""'
-endif
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_working_path_mode = 'ra'
-let g:ctrlp_cmd = 'CtrlPMRU'
+" if executable('rg')
+"   " Use ag over grep
+"   set grepprg=rg\ --vimgrep\ --no-heading\ --smart-case
+" endif
+"
+" let g:ctrlp_use_caching = 1
+" let g:ctrlp_clear_cache_on_exit = 1
+"
+" if executable('rg')
+"   let g:ctrlp_user_command = 'rg %s --files --hidden --color=never --glob ""'
+" endif
+" let g:ctrlp_map = '<c-p>'
+" let g:ctrlp_working_path_mode = 'ra'
+" let g:ctrlp_cmd = 'CtrlPMRU'
 " Easy bindings for its various modes
 " nmap <leader>bb :CtrlPBuffer<cr>
 " nmap <leader>bm :CtrlPMixed<cr>
 " nmap <leader>bs :CtrlPMRU<cr>
 " Extensions are optional. To enable an extension, add its name to the variable
 " g:ctrlp_extensions: >
-let g:ctrlp_extensions = ['line', 'changes', 'quickfix', 'rtscript',  'bookmarkdir']
+" let g:ctrlp_extensions = ['line', 'changes', 'quickfix', 'rtscript',  'bookmarkdir']
 " Specify the number of recently opened files you want CtrlP to remember: >
-let g:ctrlp_mruf_max = 2500
+" let g:ctrlp_mruf_max = 2500
 
 " add all recently used work dirs to the CtrlPBookmarkDir list by an autocommand
-augroup CtrlPDirMRU
-autocmd!
-autocmd FileType * if &modifiable | execute 'silent CtrlPBookmarkDirAdd! %:p:h' | endif
-augroup END
+" augroup CtrlPDirMRU
+" autocmd!
+" autocmd FileType * if &modifiable | execute 'silent CtrlPBookmarkDirAdd! %:p:h' | endif
+" augroup END
 """"""""""""""""""""""""""""""""""""
 "==> Ag The Silver Searcher
 """""""""""""""""""""""""""""""""""
@@ -654,29 +600,29 @@ augroup END
 " Trigger configuration. Do not use <tab> if you use
 " https://github.com/Valloric/YouCompleteMe.
 " make YCM compatible with UltiSnips (using supertab)
-let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-let g:ycm_filetype_blacklist = {
-        \ 'tagbar': 1,
-        \ 'notes': 1,
-        \ 'netrw': 1,
-        \ 'unite': 1,
-        \ 'text': 1,
-        \ 'vimwiki': 1,
-        \ 'pandoc': 1,
-        \ 'infolog': 1,
-        \ 'leaderf': 1,
-        \ 'mail': 1
-        \}
-let g:SuperTabDefaultCompletionType = '<C-n>'
-let g:UltiSnipsEditSplit = 'vertical'
-" better key bindings for UltiSnipsExpandTrigger
-let g:UltiSnipsExpandTrigger = "<tab>"
-let g:UltiSnipsJumpForwardTrigger = "<tab>"
-let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
-let g:UltiSnipsListSnippets="<c-a>"
-
-let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/UltiSnips']
+" let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+" let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+" let g:ycm_filetype_blacklist = {
+"         \ 'tagbar': 1,
+"         \ 'notes': 1,
+"         \ 'netrw': 1,
+"         \ 'unite': 1,
+"         \ 'text': 1,
+"         \ 'vimwiki': 1,
+"         \ 'pandoc': 1,
+"         \ 'infolog': 1,
+"         \ 'leaderf': 1,
+"         \ 'mail': 1
+"         \}
+" let g:SuperTabDefaultCompletionType = '<C-n>'
+" let g:UltiSnipsEditSplit = 'vertical'
+" " better key bindings for UltiSnipsExpandTrigger
+" let g:UltiSnipsExpandTrigger = "<tab>"
+" let g:UltiSnipsJumpForwardTrigger = "<tab>"
+" let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+" let g:UltiSnipsListSnippets="<c-a>"
+"
+" let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/UltiSnips']
 
 
 " One more example on how to use this function to extract all snippets available
@@ -715,8 +661,6 @@ let g:fzf_buffers_jump = 1
 " [[B]Commits] Customize the options used by 'git log':
 let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
 
-" [Tags] Command to generate tags file
-let g:fzf_tags_command = 'ctags -R'
 
 " [Commands] --expect expression for directly executing the command
 let g:fzf_commands_expect = 'alt-enter,ctrl-x'
@@ -728,7 +672,7 @@ let g:fzf_commands_expect = 'alt-enter,ctrl-x'
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 
 " Replace the default dictionary completion with fzf-based fuzzy completion
-inoremap <expr> <c-x><c-k> fzf#vim#complete('cat /usr/share/dict/words')
+" inoremap <expr> <c-x><c-k> fzf#vim#complete('cat /usr/share/dict/words')
 " Insert mode completion
 " imap <c-x><c-k> <plug>(fzf-complete-word)
 imap <c-x><c-f> <plug>(fzf-complete-path)
@@ -750,48 +694,5 @@ nnoremap <silent> <C-f> :Files<CR>
 nnoremap <silent> <Leader>f :Rg<CR>
 nnoremap <silent> <Leader>/ :BLines<CR>
 
-
-
-" fzf-bibtex
-""""""""""""""""""""""""""""""""""""
-" https://github.com/msprev/fzf-bibtex
-"""""""""""""""""""""""""""""""""""
-let $FZF_BIBTEX_CACHEDIR = 'Library/Caches'
-let $FZF_BIBTEX_SOURCES ='~/Dropbox/Bibtex_database/mylib.bib'
-function! s:bibtex_cite_sink(lines)
-    let r=system("bibtex-cite ", a:lines)
-    execute ':normal! a' . r
-endfunction
-
-function! s:bibtex_markdown_sink(lines)
-    let r=system("bibtex-markdown ", a:lines)
-    execute ':normal! a' . r
-endfunction
-
-nnoremap <silent> <leader>c :call fzf#run({
-                        \ 'source': 'bibtex-ls',
-                        \ 'sink*': function('<sid>bibtex_cite_sink'),
-                        \ 'up': '40%',
-                        \ 'options': '--ansi --layout=reverse-list --multi --prompt "Cite> "'})<CR>
-
-nnoremap <silent> <leader>m :call fzf#run({
-                        \ 'source': 'bibtex-ls',
-                        \ 'sink*': function('<sid>bibtex_markdown_sink'),
-                        \ 'up': '40%',
-                        \ 'options': '--ansi --layout=reverse-list --multi --prompt "Markdown> "'})<CR>
-
-""""""""""""""""""""""""""""""""""""
-"==> Markoown Preview
-"""""""""""""""""""""""""""""""""""
-" Ctrl-m to run preview
-let vim_markdown_preview_hotkey='<C-m>'
-
-" example: Use Pandoc to render HTML.
-let vim_markdown_preview_pandoc=1
-
-
-""""""""""""""""""""""""""""""""""""
-"==> 让 Vim 输入中文成为一种享受
-"""""""""""""""""""""""""""""""""""
 
 
