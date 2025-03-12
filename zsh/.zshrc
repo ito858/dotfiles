@@ -1,0 +1,169 @@
+# CodeWhisperer pre block. Keep at the top of this file.
+[[ -f "${HOME}/Library/Application Support/codewhisperer/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/codewhisperer/shell/zshrc.pre.zsh"
+# If you come from bash you might have to change your $PATH.
+# export PATH=$HOME/bin:/usr/local/bin:$PATH
+
+# Path to your oh-my-zsh installation.
+
+export ZSH="/Users/yangliu/.oh-my-zsh"
+
+# suppose you have installed fzf to ~/.fzf, change it to what suits you
+
+export FZF_BASE="$HOME/.fzf"
+# Use rg for fzf
+# export FZF_DEFAULT_COMMAND="rg --files --hidden --follow --glob '!.git'"
+export FZF_DEFAULT_COMMAND="fd . $HOME"
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_COMMAND="fd -t d . $HOME"
+bindkey "ç" fzf-cd-widget
+
+
+
+# export JUPYTER_PATH=${JUPYTER_PATH}:/opt/homebrew/lib/python3.11/site-packages
+
+# Set name of the theme to load --- if set to "random", it will
+# load a random theme each time oh-my-zsh is loaded, in which case,
+# to know which specific one was loaded, run: echo $RANDOM_THEME
+# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+ZSH_THEME="flazz"
+
+# Set list of themes to pick from when loading at random
+# Setting this variable when ZSH_THEME=random will cause zsh to load
+# a theme from this variable instead of looking in ~/.oh-my-zsh/themes/
+# If set to an empty array, this variable will have no effect.
+# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
+
+# Uncomment the following line to use case-sensitive completion.
+# CASE_SENSITIVE="true"
+
+# Uncomment the following line to use hyphen-insensitive completion.
+# Case-sensitive completion must be off. _ and - will be interchangeable.
+# HYPHEN_INSENSITIVE="true"
+
+# Uncomment the following line to disable bi-weekly auto-update checks.
+# DISABLE_AUTO_UPDATE="true"
+
+# Uncomment the following line to automatically update without prompting.
+# DISABLE_UPDATE_PROMPT="true"
+
+# Uncomment the following line to change how often to auto-update (in days).
+# export UPDATE_ZSH_DAYS=13
+
+# Uncomment the following line if pasting URLs and other text is messed up.
+# DISABLE_MAGIC_FUNCTIONS=true
+
+# Uncomment the following line to disable colors in ls.
+# DISABLE_LS_COLORS="true"
+
+# Uncomment the following line to disable auto-setting terminal title.
+# DISABLE_AUTO_TITLE="true"
+
+# Uncomment the following line to enable command auto-correction.
+# ENABLE_CORRECTION="true"
+
+# Uncomment the following line to display red dots whilst waiting for completion.
+# COMPLETION_WAITING_DOTS="true"
+
+# Uncomment the following line if you want to disable marking untracked files
+# under VCS as dirty. This makes repository status check for large repositories
+# much, much faster.
+# DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+# Uncomment the following line if you want to change the command execution time
+# stamp shown in the history command output.
+# You can set one of the optional three formats:
+# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# or set a custom format using the strftime function format specifications,
+# see 'man strftime' for details.
+# HIST_STAMPS="mm/dd/yyyy"
+
+# Would you like to use another custom folder than $ZSH/custom?
+# ZSH_CUSTOM=/path/to/new-custom-folder
+
+# Which plugins would you like to load?
+# Standard plugins can be found in ~/.oh-my-zsh/plugins/*
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+# zsh-interactive-cd
+plugins=(git bundler vi-mode macos fzf tmux)
+
+source $ZSH/oh-my-zsh.sh
+
+# User configuration
+
+# export MANPATH="/usr/local/man:$MANPATH"
+
+# You may need to manually set your language environment
+# export LANG=en_US.UTF-8
+
+# Preferred editor for local and remote sessions
+# if [[ -n $SSH_CONNECTION ]]; then
+#   export EDITOR='vim'
+# else
+#   export EDITOR='mvim'
+# fi
+
+# Compilation flags
+# export ARCHFLAGS="-arch x86_64"
+
+
+
+# Set personal aliases, overriding those provided by oh-my-zsh libs,
+# plugins, and themes. Aliases can be placed here, though oh-my-zsh
+# users are encouraged to define aliases within the ZSH_CUSTOM folder.
+# For a full list of active aliases, run `alias`.
+#
+# Example aliases
+# alias ohmyzsh="mate ~/.oh-my-zsh"
+#alias zshconfig="nvim ~/.zshrc"
+#alias ohmyzsh="cd ~/.oh-my-zsh"
+#alias zr="source ~/.zshrc"
+
+# Restore vim sessions
+# alias rsvim='mvim -S ~/Documents/vim-sessions/*.vim'
+
+# run neovim QT
+# alias nvim-qt='qv nvim-qt &'
+
+
+# To My Folders
+# alias gtd='cd ~/Documents/frm_ytdl'
+
+# Pre-compile latex files named main_ams.tex
+alias mypretex mkpdf="pdftex -ini -jobname=\"main_ams\" \"&pdflatex\" mylatexformat.ltx main_ams.tex"
+
+alias xelatexmk="latexmk -xelatex"
+alias yp='mpv --ytdl-format=best'
+alias y='yt-dlp'
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f  ~/Dropbox/dotfiles/youtube-dl_completion.zsh ] && source ~/Dropbox/dotfiles/youtube-dl_completion.zsh
+
+
+alias cat='bat'
+
+alias g='cd ~ && cd "$(fd . --type d --hidden --exclude .git | fzf +m)"'
+
+# combine pdfs using gs
+alias gspdf='gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=merged.pdf'
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+# __conda_setup="$('/Users/yangliu/miniforge3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+# if [ $? -eq 0 ]; then
+    # eval "$__conda_setup"
+# else
+    # if [ -f "/Users/yangliu/miniforge3/etc/profile.d/conda.sh" ]; then
+        # . "/Users/yangliu/miniforge3/etc/profile.d/conda.sh"
+    # else
+        # export PATH="/Users/yangliu/miniforge3/bin:$PATH"
+    # fi
+# fi
+# unset __conda_setup
+# <<< conda initialize <<<
+
+# CodeWhisperer post block. Keep at the bottom of this file.
+[[ -f "${HOME}/Library/Application Support/codewhisperer/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/codewhisperer/shell/zshrc.post.zsh"
+# . /opt/homebrew/etc/profile.d/z.sh
+export PATH="/opt/homebrew/opt/mysql@8.4/bin:$PATH"
