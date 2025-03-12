@@ -127,18 +127,6 @@ source $ZSH/oh-my-zsh.sh
 # alias nvim-qt='qv nvim-qt &'
 
 
-# To My Folders
-# alias gtd='cd ~/Documents/frm_ytdl'
-
-# Pre-compile latex files named main_ams.tex
-alias mypretex mkpdf="pdftex -ini -jobname=\"main_ams\" \"&pdflatex\" mylatexformat.ltx main_ams.tex"
-
-alias xelatexmk="latexmk -xelatex"
-alias yp='mpv --ytdl-format=best'
-alias y='yt-dlp'
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-[ -f  ~/Dropbox/dotfiles/youtube-dl_completion.zsh ] && source ~/Dropbox/dotfiles/youtube-dl_completion.zsh
 
 
 alias cat='bat'
@@ -148,22 +136,3 @@ alias g='cd ~ && cd "$(fd . --type d --hidden --exclude .git | fzf +m)"'
 # combine pdfs using gs
 alias gspdf='gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=merged.pdf'
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-# __conda_setup="$('/Users/yangliu/miniforge3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-# if [ $? -eq 0 ]; then
-    # eval "$__conda_setup"
-# else
-    # if [ -f "/Users/yangliu/miniforge3/etc/profile.d/conda.sh" ]; then
-        # . "/Users/yangliu/miniforge3/etc/profile.d/conda.sh"
-    # else
-        # export PATH="/Users/yangliu/miniforge3/bin:$PATH"
-    # fi
-# fi
-# unset __conda_setup
-# <<< conda initialize <<<
-
-# CodeWhisperer post block. Keep at the bottom of this file.
-[[ -f "${HOME}/Library/Application Support/codewhisperer/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/codewhisperer/shell/zshrc.post.zsh"
-# . /opt/homebrew/etc/profile.d/z.sh
-export PATH="/opt/homebrew/opt/mysql@8.4/bin:$PATH"
