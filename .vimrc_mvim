@@ -746,5 +746,28 @@ nnoremap <silent> <C-f> :Files<CR>
 nnoremap <silent> <Leader>f :Rg<CR>
 nnoremap <silent> <Leader>/ :BLines<CR>
 
+" Configure yank and paste using local machine's clipbord
+" OSC 52 clipboard integration
+function! Osc52Yank()
+  let buffer=system('base64 -w0', @0)
+  let buffer=substitute(buffer, '\n$', '', '')
+  let buffer='\e]52;c;'.buffer.'\x07'
+  silent exe "!echo -ne ".shellescape(buffer)." > /dev/tty"
+  redraw!
+endfunction
 
+" Configure clipboard register to automatically use OSC52
+function! ClipboardYank()
+  call Osc52Yank()
+endfunction
 
+function! ClipboardPaste()
+  let @" = system('pbpaste')
+endfunction
+
+" Map leader+y to copy to clipboard
+vnoremap <leader>y y:call ClipboardYank()<cr>
+nnoremap <leader>y yy:call ClipboardYank()<cr>
+
+" Map leader+p to paste from clipboard
+nnoremap <leader>p :call ClipboardPaste()<cr>p
